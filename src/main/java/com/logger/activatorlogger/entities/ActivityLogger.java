@@ -28,8 +28,6 @@ public class ActivityLogger {
   @Column("method_name")
   private String methodName;
 
-  @Column("role")
-  private String role;
 
   public ActivityLogger() {
   }
@@ -74,11 +72,4 @@ public class ActivityLogger {
     methodName = pMethodName;
   }
 
-  public String getRole() {
-    return role;
-  }
-
-  public void setRole(String pRole) {
-    role = pRole;
-  }
 }

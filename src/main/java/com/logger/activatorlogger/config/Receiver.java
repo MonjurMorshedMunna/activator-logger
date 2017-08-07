@@ -40,12 +40,7 @@ public class Receiver {
     JavaSparkContext sc = new JavaSparkContext(conf);
     List<String> logs = Arrays.asList(consumerRecord.value().toString().split(" "));
     ActivityLogger activityLogger = new ActivityLogger();
-    for(String log: logs){
-      if(logs.contains("class")){
-        
-      }
-
-    }
+   
     latch.countDown();
   }
 
