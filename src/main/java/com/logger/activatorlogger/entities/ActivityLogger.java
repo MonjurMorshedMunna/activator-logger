@@ -1,11 +1,14 @@
 package com.logger.activatorlogger.entities;
 
 import org.springframework.cassandra.core.PrimaryKeyType;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.cassandra.mapping.Column;
 import org.springframework.data.cassandra.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.mapping.Table;
 
 import java.sql.Timestamp;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by Monjur-E-Morshed on 02-Aug-17.
@@ -13,8 +16,8 @@ import java.sql.Timestamp;
 @Table(value = "activity_logger")
 public class ActivityLogger {
 
-  @PrimaryKeyColumn(name = "time", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
-  private Timestamp time;
+  @PrimaryKeyColumn(name = "id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
+  private Long id;
 
   @PrimaryKeyColumn(name = "user_id", ordinal = 1, type = PrimaryKeyType.PARTITIONED)
   private String userId;
@@ -28,16 +31,19 @@ public class ActivityLogger {
   @Column("method_name")
   private String methodName;
 
+  @Transient
+  private static final AtomicLong count = new AtomicLong(0);
 
   public ActivityLogger() {
   }
 
-  public Timestamp getTime() {
-    return time;
+
+  public Long getId() {
+    return count.incrementAndGet();
   }
 
-  public void setTime(Timestamp pTime) {
-    time = pTime;
+  public void setId(Long id) {
+    this.id = null;
   }
 
   public String getUserId() {
