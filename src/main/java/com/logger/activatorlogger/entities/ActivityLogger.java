@@ -1,11 +1,13 @@
 package com.logger.activatorlogger.entities;
 
 import org.springframework.cassandra.core.PrimaryKeyType;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.cassandra.mapping.Column;
 import org.springframework.data.cassandra.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.mapping.Table;
 
+import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -16,13 +18,13 @@ import java.util.concurrent.atomic.AtomicLong;
 @Table(value = "activity_logger")
 public class ActivityLogger {
 
-  @PrimaryKeyColumn(name = "id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
-  private Long id;
 
-  @PrimaryKeyColumn(name = "user_id", ordinal = 1, type = PrimaryKeyType.PARTITIONED)
+
+
+  @PrimaryKeyColumn(name="user_id", ordinal = 0, type=PrimaryKeyType.PARTITIONED)
   private String userId;
 
-  @Column("access_time")
+  @PrimaryKeyColumn(name="access_time", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
   private Timestamp accessTime;
 
   @Column("class_name")
@@ -38,13 +40,7 @@ public class ActivityLogger {
   }
 
 
-  public Long getId() {
-    return count.incrementAndGet();
-  }
 
-  public void setId(Long id) {
-    this.id = null;
-  }
 
   public String getUserId() {
     return userId;
