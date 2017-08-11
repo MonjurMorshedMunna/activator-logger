@@ -9,6 +9,7 @@ import org.springframework.data.cassandra.mapping.Table;
 
 import javax.annotation.Generated;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -23,7 +24,7 @@ public class ActivityLogger {
   private String userId;
 
   @PrimaryKeyColumn(name="access_time", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
-  private Timestamp accessTime;
+  private Date accessTime;
 
   @Column("class_name")
   private String className;
@@ -58,11 +59,11 @@ public class ActivityLogger {
     userId = pUserId;
   }
 
-  public Timestamp getAccessTime() {
+  public Date getAccessTime() {
     return accessTime;
   }
 
-  public void setAccessTime(Timestamp pAccessTime) {
+  public void setAccessTime(Date pAccessTime) {
     accessTime = pAccessTime;
   }
 
