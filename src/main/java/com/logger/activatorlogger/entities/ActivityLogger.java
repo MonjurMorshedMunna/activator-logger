@@ -32,6 +32,8 @@ public class ActivityLogger {
   private String methodName;
 
 
+  @Column("role_id")
+  private Long roleId;
 
   @Transient
   private static final AtomicLong count = new AtomicLong(0);
@@ -40,9 +42,15 @@ public class ActivityLogger {
   }
 
 
+    public Long getRoleId() {
+        return roleId;
+    }
 
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
 
-  public String getUserId() {
+    public String getUserId() {
     return userId;
   }
 
