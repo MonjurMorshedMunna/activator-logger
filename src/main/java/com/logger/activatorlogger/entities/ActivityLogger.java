@@ -9,6 +9,7 @@ import org.springframework.data.cassandra.mapping.Table;
 
 import javax.annotation.Generated;
 import java.sql.Timestamp;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -17,9 +18,6 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @Table(value = "activity_logger")
 public class ActivityLogger {
-
-
-
 
   @PrimaryKeyColumn(name="user_id", ordinal = 0, type=PrimaryKeyType.PARTITIONED)
   private String userId;
@@ -32,6 +30,8 @@ public class ActivityLogger {
 
   @Column("method_name")
   private String methodName;
+
+
 
   @Transient
   private static final AtomicLong count = new AtomicLong(0);
