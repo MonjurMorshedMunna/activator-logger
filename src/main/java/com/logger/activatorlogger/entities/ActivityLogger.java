@@ -1,17 +1,12 @@
 package com.logger.activatorlogger.entities;
 
 import org.springframework.cassandra.core.PrimaryKeyType;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.cassandra.mapping.Column;
 import org.springframework.data.cassandra.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.mapping.Table;
 
-import javax.annotation.Generated;
-import java.sql.Timestamp;
 import java.util.Date;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -32,9 +27,17 @@ public class ActivityLogger {
   @Column("method_name")
   private String methodName;
 
+  /*
+    @Column("role_id")
+    private Long roleId;*/
+  @Column("ip_address")
+  private String ipAddress;
 
-  @Column("role_id")
-  private Long roleId;
+  @Column("device")
+  private String device;
+
+  @Column("exception")
+  private String exception;
 
   @Transient
   private static final AtomicLong count = new AtomicLong(0);
@@ -42,16 +45,7 @@ public class ActivityLogger {
   public ActivityLogger() {
   }
 
-
-    public Long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getUserId() {
+  public String getUserId() {
     return userId;
   }
 
@@ -83,4 +77,31 @@ public class ActivityLogger {
     methodName = pMethodName;
   }
 
+  public String getIpAddress() {
+    return ipAddress;
+  }
+
+  public void setIpAddress(String pIpAddress) {
+    ipAddress = pIpAddress;
+  }
+
+  public String getDevice() {
+    return device;
+  }
+
+  public void setDevice(String pDevice) {
+    device = pDevice;
+  }
+
+  public String getException() {
+    return exception;
+  }
+
+  public void setException(String pException) {
+    exception = pException;
+  }
+
+  public static AtomicLong getCount() {
+    return count;
+  }
 }

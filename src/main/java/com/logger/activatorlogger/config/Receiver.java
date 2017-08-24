@@ -1,25 +1,18 @@
 package com.logger.activatorlogger.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.logger.activatorlogger.entities.ActivityLogger;
-import com.logger.activatorlogger.entities.Role;
 import com.logger.activatorlogger.repositories.ActivityLoggerRepository;
 import com.logger.activatorlogger.repositories.RoleRepository;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.JavaSparkContext;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
 
 /**
  * Created by Monjur-E-Morshed on 30-Jul-17.
@@ -56,15 +49,15 @@ public class Receiver {
     ObjectMapper mapper = new ObjectMapper();
     ActivityLogger actualObject = mapper.readValue(consumerRecord.value().toString(), ActivityLogger.class);
 
-    if(actualObject.getRoleId()!=null){
+    /*if(actualObject.getRoleId()!=null){
         predict(actualObject);
-    }
+    }*/
 
     activityLoggerRepository.save(actualObject);
     latch.countDown();
   }
 
-    private void predict(ActivityLogger actualObject) {
+   /* private void predict(ActivityLogger actualObject) {
         List<ActivityLogger> activityLoggers = activityLoggerRepository.findAllWithoutNullRole();
         List<Role> roles = roleRepository.findAllRoles();
 
@@ -99,10 +92,18 @@ public class Receiver {
 
     private void calculateConditinoalProbability(ActivityLogger actualObject, List<ActivityLogger> activityLoggers, List<Role> roles, Map<Long, Double> classPriorProbabilityMap, Map<Long, List<Double>> classConditionalProbilities) {
         for(Role role: roles){
-            List<ActivityLogger> activityLoggerListConditional = activityLoggers.stream()
+          List<ActivityLogger> activityLoggerConditionalClassName = activityLoggers.stream()
                     .filter(a->a.getRoleId().equals(role.getId()) && a.getClassName().equals(actualObject.getClassName()))
                     .collect(Collectors.toList());
-            Double probability = (double)activityLoggerListConditional.size()/classPriorProbabilityMap.get(role.getId());
+          Double probability = (double) activityLoggerConditionalClassName.size() / classPriorProbabilityMap.get(role.getId());
+
+          int activityLoggerConditionalClassNameSize = activityLoggerConditionalClassName.size();
+          List<ActivityLogger> activityLoggerConditionalMethodName = activityLoggers.stream()
+              .filter(a -> a.getRoleId().equals(role.getId()) && a.getMethodName().equals(actualObject.getMethodName()))
+              .collect(Collectors.toList());
+          int activityLoggerConditionalMethodNameSize = activityLoggerConditionalMethodName.size();
+          probability = (double) activityLoggerConditionalMethodName.size() / classPriorProbabilityMap.get(role.getId()) * probability;
+
             if(classConditionalProbilities.get(role.getId())==null){
                 List<Double> probabilites = new ArrayList<>();
                 probabilites.add(probability);
@@ -123,6 +124,6 @@ public class Receiver {
             classNumberMap.put(role.getId(), roleBasedActivityLogger.size());
             classPriorProbabilityMap.put(role.getId(), ((double)roleBasedActivityLogger.size()/activityLoggers.size()));
         }
-    }
+    }*/
 
 }

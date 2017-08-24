@@ -1,8 +1,6 @@
 package com.logger.activatorlogger.repositories;
 
 import com.logger.activatorlogger.entities.ActivityLogger;
-import com.logger.activatorlogger.entities.Role;
-import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,9 +14,9 @@ import java.util.List;
 public interface ActivityLoggerRepository extends CrudRepository<ActivityLogger, Timestamp> {
   public List<ActivityLogger> findByUserId(String userId);
 
-  @Query("select * from activity_logger where role_id=?0 allow filtering")
+ /* @Query("select * from activity_logger where role_id=?0 allow filtering")
   public List<ActivityLogger> findByRoleId(Long roleId);
 
   @Query("select * from activity_logger where role_id>=0 allow filtering" )
-  public List<ActivityLogger> findAllWithoutNullRole();
+  public List<ActivityLogger> findAllWithoutNullRole();*/
 }
